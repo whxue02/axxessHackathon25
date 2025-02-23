@@ -1,9 +1,15 @@
 
-
+import NavBar from "../components/Navbar"
 export default function Home() {
     return (
         <>
-        <h1>Home Page</h1>
+        <NavBar />
+        <img src="mmHomepage.png" alt="Description" class="scaled-image"></img>
+
+        <button class="login-btn">Login</button>
+
+
         </>
+        
     )
 }
