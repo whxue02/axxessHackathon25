@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Mood from './pages/Mood'
+import Administrator from './pages/Administrator'
 
 
 export default function App() {
@@ -13,7 +14,7 @@ export default function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/mood" element={<Mood />} />
-          
+          <Route path="/administrator" element={<Administrator/>} />
         </Routes>
       </BrowserRouter>
     </div>

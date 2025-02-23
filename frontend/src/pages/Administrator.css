@@ -1,0 +1,56 @@
+.admin-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+}
+
+p.administrator {
+    font-size: 2.5rem;
+    color: #FFF;
+    margin-top: 20px;
+    text-align: center;
+    margin:0;
+    margin-top: 60px;
+}
+
+.background-administrator {
+    background-color: #1a5639;
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+}
+
+/* Graph heading */
+.graph-container h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Button styles */
+button.administrator {
+    background-color: #1a5639;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    min-width: 50;
+}
+
+button.administrator:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+button.administrator:hover:not(:disabled) {
+    background-color: #1a5639;
+}
