@@ -4,15 +4,11 @@ export default function Home() {
     return (
         <>
         <NavBar />
-        <img src="mmHomepage.png" alt="Description" class="scaled-image"></img>
-
-        <button class="login-btn">Get Started!</button>
-<link rel="stylesheet" href="styles.css"></link>
-
-
-        
-
-
+        <div className="background-home">
+            <img src="mmHomepage.png" alt="Description" class="scaled-image"></img>
+            <button class="login-btn">Get Started!</button>
+            <link rel="stylesheet" href="styles.css"></link>
+        </div>
         </>
         
     )

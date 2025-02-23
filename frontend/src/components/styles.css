@@ -6,7 +6,10 @@ body {
     background-color: #355ac4;
 }
 
-   
+.background-home {
+    background-color: #355ac4;
+    height: 100vh
+}   
 
 .nav {
     background-color: #ffff;
