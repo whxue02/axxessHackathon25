@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Mood from './pages/Mood'
+import './App.css'
 import Administrator from './pages/Administrator'
 
 
