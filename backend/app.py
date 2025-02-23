@@ -2,9 +2,8 @@ import os
 from flask import Flask
 from dotenv import load_dotenv
 
-from flask import Flask, jsonify, request, current_app, g
+from flask import Flask, jsonify, request
 from flask_login import LoginManager
-from flask_pymongo import PyMongo
 from flask_cors import CORS
 
 from bson.objectid import ObjectId  # Import ObjectId
@@ -13,7 +12,8 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_cors import CORS
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
+import chatbot
 
 # create the app
 app = Flask(__name__)
@@ -44,7 +44,8 @@ def addButtonClick():
     try:
         email = request.json.get("email")
         buttonType = request.json.get("buttonType")
-        time = datetime.now(timezone.utc).isoformat() 
+        utc_5 = timezone(timedelta(hours=-5))
+        time = datetime.now(utc_5).isoformat() 
 
         if not email or not buttonType:
             return jsonify({"error": "missing email or button type"})
@@ -62,6 +63,19 @@ def addButtonClick():
 
         updated_user = db["users"].find_one({"email": email}, {"_id": 0}) 
         return jsonify(updated_user)
+    except Exception as e:
+        return jsonify({"error": f"Error: {str(e)}"}), 500
+    
+# get user information for healthcare provider use
+@app.route("/getAllUsers", methods=["GET"])
+def getAllUser():
+    try:
+        user = db["users"].find_one({"email": current_user.email}, {"_id": 0, "password": 0})
+        if user["role"] == "administrator":
+            users = list(db["users"].find({"role":"patient"},{"_id": 0, "password": 0}))
+            return jsonify(users)
+        else:
+            return jsonify({"message": "you do not have access"})
     except Exception as e:
         return jsonify({"error": f"Error: {str(e)}"}), 500
 
@@ -98,7 +112,7 @@ def register():
             return jsonify({"error": "User already exists"}), 400
 
         # insert user into DB
-        user_id = db.users.insert_one({"email": email, "password": password, "positive": [], "negative":[]}).inserted_id
+        user_id = db.users.insert_one({"email": email, "password": password, "role": "patient", "positive": [], "negative":[]}).inserted_id
 
         return jsonify({"message": "user registered successfully", "user_id": str(user_id)}), 201
 
@@ -146,6 +160,18 @@ def get_current_user():
         return jsonify(user)
     else:
         return jsonify({"message": "not logged in"})
+
+# chatbot
+@app.route('/chatbot', methods=['POST'])
+def submit_question():
+    # get data from frontend
+    question = request.json.get('question')
+    context = request.json.get('context')
+
+    answer = chatbot.getAnswer(question, context)
+
+    # send data back as a response
+    return jsonify({"answer": answer})
 
 if __name__ == '__main__':
     app.run(debug=True)
