@@ -4,7 +4,8 @@ export default function NavBar() {
     <a href="/" className = "site-title">MoodMallow</a>
     <ul>
       
-         <a href="/login" class="button">Login</a>
+         <a href="/login" class="button">Log in</a>
+         <a href="/signup" class="button">Sign Up</a>
       
      
     </ul>
