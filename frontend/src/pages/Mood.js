@@ -1,4 +1,5 @@
 import '../Mood.css'
+import Chatbot from '../components/chatbot'
 
 export default function Mood() {
     return (
@@ -16,8 +17,9 @@ export default function Mood() {
                     </button>
                 </div>
             </div>
-            
+            <Chatbot/>
             </div>
+
         </div>
         
     )

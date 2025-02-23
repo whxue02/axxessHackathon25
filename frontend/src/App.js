@@ -17,10 +17,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/mood" element={<Mood />} />
           <Route path="/administrator" element={<Administrator/>} />
-=======
           <Route path="/signup" element={<Signup />} />
-          
->>>>>>> Stashed changes
         </Routes>
       </BrowserRouter>
     </div>

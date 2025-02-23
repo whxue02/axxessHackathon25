@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -27,6 +28,7 @@ export const Graph = ({ user }) => {
     const [negativeHours, setNegativeHours] = useState({});
     const [selectedDate, setSelectedDate] = useState(""); 
     const [availableDates, setAvailableDates] = useState([]);
+    const [analysis, setAnalysis] = useState([])
 
     useEffect(() => {
         if (!user?.positive || !user?.negative) return;
@@ -81,8 +83,14 @@ export const Graph = ({ user }) => {
         }
     };
 
-    const handleGetAnalysis = () => {
-        
+    const handleGetAnalysis = async () => {
+        try {
+            const response = await axios.get('http://127.0.0.1:5000/analyze')
+            console.log("Result:", response.data);
+        } 
+        catch (error) {
+                console.error("Error running the Python script:", error);
+        }
     }
 
     // Chart Data
@@ -115,7 +123,7 @@ export const Graph = ({ user }) => {
                 Next Day
             </button>
             <Line data={data} />
-            <button className='administrator' onClick>
+            <button className='administrator' onClick={handleGetAnalysis}>
                 Get Analysis
             </button>
         </div>

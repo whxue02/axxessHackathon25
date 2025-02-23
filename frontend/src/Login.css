@@ -14,7 +14,6 @@ body {
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    background: #fff;
 }
 
 h1 {
@@ -38,7 +37,7 @@ ul {
 }
 
 form input[type="name"],
-form input[type="username"],
+form input[type="email"],
 form input[type="password"] {
     display: block;
     width: 100%;
