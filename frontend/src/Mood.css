@@ -2,7 +2,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background-color: white;;
 }
 
 :root {
@@ -82,10 +81,11 @@ ul {
 }
 
 .background-mood {
-    background-color: green;
+    background: #fff;;
     min-height: 100vh;
 }
 
 .background-mood2 {
     background-color: green;
 }
+
