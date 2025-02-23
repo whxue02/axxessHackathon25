@@ -14,6 +14,8 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 from flask_cors import CORS
 from datetime import datetime, timezone, timedelta
 import chatbot
+import analyze
+import re
 
 # create the app
 app = Flask(__name__)
@@ -67,15 +69,15 @@ def addButtonClick():
         return jsonify({"error": f"Error: {str(e)}"}), 500
     
 # get user information for healthcare provider use
-@app.route("/getAllUsers", methods=["GET"])
+@app.route("/allUsers", methods=["GET"])
 def getAllUser():
     try:
-        user = db["users"].find_one({"email": current_user.email}, {"_id": 0, "password": 0})
-        if user["role"] == "administrator":
-            users = list(db["users"].find({"role":"patient"},{"_id": 0, "password": 0}))
-            return jsonify(users)
-        else:
-            return jsonify({"message": "you do not have access"})
+        # user = db["users"].find_one({"email": current_user.email}, {"_id": 0, "password": 0})
+        # if user["role"] == "administrator":
+        users = list(db["users"].find({"role":"patient"},{"_id": 0, "password": 0}))
+        return jsonify(users)
+        # else:
+            # return jsonify({"message": "you do not have access"})
     except Exception as e:
         return jsonify({"error": f"Error: {str(e)}"}), 500
 
@@ -172,6 +174,25 @@ def submit_question():
 
     # send data back as a response
     return jsonify({"answer": answer})
+
+@app.route('/analyze',methods=["GET"]) 
+def analyzeResults():
+    user = db["users"].find_one({"email": current_user.email})
+    # get the times
+    positive = user["positive"]
+    negative = user["negative"]
+    # convert into list
+    pos_time = [item['time'] for item in positive]
+    neg_time = [item['time'] for item in negative]
+
+    # get analysis
+    answer = analyze.getAnswer(pos_time, neg_time)
+    
+    # format analysis to be used in frontend
+    answer = answer.replace("\n", "<br />")
+    answer = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', answer)
+
+    return jsonify(answer)
 
 if __name__ == '__main__':
     app.run(debug=True)

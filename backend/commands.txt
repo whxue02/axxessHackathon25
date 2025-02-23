@@ -22,3 +22,6 @@ python server.py # run backend
 FRONTEND
 deactivate # exit virtual enviornment
 npm install axios
+npm install chart.js react-chartjs-2
+
+
