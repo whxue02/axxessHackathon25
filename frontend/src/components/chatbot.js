@@ -4,7 +4,7 @@ import './chatbot.css'
 
 const Chatbot = () => {
     // initialize variables
-    const [messages, setMessages] = useState([{text: "I'm an AI-powered dietitian, designed to provide personalized and accurate nutrition advice to users. My primary goal is to help individuals make informed food choices that cater to their unique nutritional needs and goals. I can offer guidance on meal planning, nutrition strategies, and healthy eating habits. How may I assist you today?", sender: "bot"}])
+    const [messages, setMessages] = useState([{text: "Welcome! I'm so glad you're here. I'm here to help you track how you're feeling throughout the day, and to listen whenever you'd like to share your thoughts or emotions. You can take your time—there's no rush, and I'm here to support you every step of the way. How are you feeling today?", sender: "bot"}])
     const [input, setInput] = useState("")
     const [typing, setTyping] = useState(false)
     const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +22,7 @@ const Chatbot = () => {
             setTyping(true)
         }
         
-        axios.post("http://127.0.0.1:5000/chatbot", {question: input, context: messages}).
+        axios.post("http://127.0.0.1:5000/chatbot", {question: input, context: messages}, {withCredentials: true}).
         then((response) => {
             console.log(response)
             setMessages([...messages, { text: input, sender: "user" }, {text: response.data.answer, sender: "bot"}])
@@ -52,7 +52,7 @@ const Chatbot = () => {
       {isOpen && (
         <div className="chatbot-popup">
           <div className="chatbot-header">
-            <h2>Chatbot</h2>
+            <h2>MoodMellow</h2>
             <button className="close-btn" onClick={toggleChatBot}>X</button>
           </div>
           {/* Chatbot Content */}

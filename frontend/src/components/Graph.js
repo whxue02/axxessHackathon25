@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '../api/axios'
 import { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -29,6 +29,7 @@ export const Graph = ({ user }) => {
     const [selectedDate, setSelectedDate] = useState(""); 
     const [availableDates, setAvailableDates] = useState([]);
     const [analysis, setAnalysis] = useState([])
+    const [loading, setLoading] = useState(false); 
 
     useEffect(() => {
         if (!user?.positive || !user?.negative) return;
@@ -84,12 +85,20 @@ export const Graph = ({ user }) => {
     };
 
     const handleGetAnalysis = async () => {
+        setLoading(true);
         try {
-            const response = await axios.get('http://127.0.0.1:5000/analyze')
+            const response = await api.get('http://127.0.0.1:5000/analyze', {
+                params: { email: user.email}
+            },{
+                withCredentials: true 
+            })
             console.log("Result:", response.data);
+            setAnalysis(response.data)
         } 
         catch (error) {
                 console.error("Error running the Python script:", error);
+        } finally {
+            setLoading(false); 
         }
     }
 
@@ -126,6 +135,13 @@ export const Graph = ({ user }) => {
             <button className='administrator' onClick={handleGetAnalysis}>
                 Get Analysis
             </button>
+            {loading ? (
+                <p>Loading analysis...</p>
+            ) : (
+                analysis && <div 
+                dangerouslySetInnerHTML={{ __html: analysis }}  // Render HTML content
+            />
+            )}
         </div>
     </div>
     )    

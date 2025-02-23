@@ -5,6 +5,10 @@ import Mood from './pages/Mood'
 import Signup from './pages/Signup'
 import './App.css'
 import Administrator from './pages/Administrator'
+import History from './pages/history'
+import axios from 'axios'
+
+axios.defaults.withCredentials = true;
 
 
 export default function App() {
@@ -18,6 +22,7 @@ export default function App() {
           <Route path="/mood" element={<Mood />} />
           <Route path="/administrator" element={<Administrator/>} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/history" element={<History />} />
         </Routes>
       </BrowserRouter>
     </div>

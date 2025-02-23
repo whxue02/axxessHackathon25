@@ -2,6 +2,8 @@ import '../Login.css'
 import { useState } from 'react'
 import axios from 'axios'
 import {useNavigate} from "react-router-dom"
+import api from '../api/axios'
+import NavBar from '../components/Navbar'
 
 export default function Login() {
     const [userInfo,setUserInfo] = useState({email:"", password:""})
@@ -17,10 +19,12 @@ export default function Login() {
         console.log(userInfo)
         try {
             e.preventDefault();
-            const response = await axios.post('http://127.0.0.1:5000/login', {email: userInfo.email, password: userInfo.password});
+            const response = await api.post('http://127.0.0.1:5000/login', {email: userInfo.email, password: userInfo.password}, {
+                withCredentials: true  // Important to send cookies
+            });
             console.log("Result:", response.data);
             console.log(response.data.message)
-            if (response.data.message == "Login successful") { 
+            if (response.data.message == "Logged in successfully") { 
                 navigate('/mood'); 
             } else {
                 alert("Login failed: " + response.data.message);
@@ -32,6 +36,8 @@ export default function Login() {
     }
 
     return (
+        <div>
+
         <div class="split-screen">
             <div class="left">
                 <img src="login-mascot.png" alt="Login Mascot" width="50%" height="auto"></img>
@@ -40,8 +46,8 @@ export default function Login() {
                 <h1>Login</h1>
                 <form action ="#" method="POST">
                     <div class="input">
-                        <label for="username">Email</label>
-                        <input type="username" id="email" name="email" placeholder="Email" required onChange={(e) => handleChange(e)}>
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Email" required onChange={(e) => handleChange(e)}>
                         </input>
                     </div>
 
@@ -54,6 +60,7 @@ export default function Login() {
                     <button class="submit-button" type="submit" onClick={handleSubmit}>Login</button>
                 </form>
             </div>
+        </div>
         </div>
     )
 }

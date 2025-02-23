@@ -1,13 +1,12 @@
 import "./styles.css"
-export default function NavBar() {
+export default function NavbarPost() {
  return <nav className="nav">
     <a href="/" className = "site-title">MoodMallow</a>
     <ul>
       
-         <a href="/login" class="button">Log in</a>
-         <a href="/signup" class="button">Sign Up</a>
-      
-     
+         <a href="/history" class="button">History</a>    
+         {/*<a href="/administrator" class="button">Admin</a>    */}
+         
     </ul>
  </nav>   
 }

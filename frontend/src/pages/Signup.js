@@ -2,7 +2,8 @@ import '../Login.css'
 import { useState } from 'react'
 import axios from 'axios'
 import {useNavigate} from "react-router-dom"
-
+import api from '../api/axios'
+import NavBar from '../components/Navbar'
 export default function Login() {
     const [userInfo,setUserInfo] = useState({email:"", password:"", name:"name"})
     const navigate = useNavigate()
@@ -17,7 +18,9 @@ export default function Login() {
         console.log(userInfo)
         try {
             e.preventDefault();
-            const response = await axios.post('http://127.0.0.1:5000/register', {email: userInfo.email, password: userInfo.password, name: userInfo.name});
+            const response = await axios.api('http://127.0.0.1:5000/register', {email: userInfo.email, password: userInfo.password, name: userInfo.name}, {
+                withCredentials: true  // Important to send cookies
+            });
             console.log("Result:", response.data);
             console.log(response.data.message)
             if (response.data.message == "user registered successfully") { 
@@ -31,6 +34,7 @@ export default function Login() {
         }
     }
     return (
+        <div>
         <div class="split-screen">
             <div class="left">
                 <img src="login-mascot.png" alt="Login Mascot" width="50%" height="auto"></img>
@@ -56,9 +60,10 @@ export default function Login() {
                         </input>
                     </div>
 
-                    <button class="submit-button" type="submit" onClick={handleSubmit}>Login</button>
+                    <button class="submit-button" type="submit" onClick={handleSubmit}>Sign Up!</button>
                 </form>
             </div>
+        </div>
         </div>
     )
 }
