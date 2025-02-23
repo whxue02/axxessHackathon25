@@ -6,9 +6,9 @@ export default function Home() {
         <NavBar />
         <div className="background-home">
             <img src="mmHomepage.png" alt="Description" class="scaled-image"></img>
-            <button class="login-btn">Get Started!</button>
+            <button class="login-btn" onClick={() => window.location.href = '/signup'}>Get Started!</button>    
             <link rel="stylesheet" href="styles.css"></link>
-        </div>
+            </div>
         </>
         
     )
