@@ -6,7 +6,11 @@ export default function Home() {
         <NavBar />
         <img src="mmHomepage.png" alt="Description" class="scaled-image"></img>
 
-        <button class="login-btn">Login</button>
+        <button class="login-btn">Get Started!</button>
+<link rel="stylesheet" href="styles.css"></link>
+
+
+        
 
 
         </>
